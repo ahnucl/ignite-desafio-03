@@ -84,18 +84,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const removeProduct = (productId: number) => {
     try {
-      const product = cart.find(product => product.id === productId)
-
-      if (!product) return
-
       const productIndex = cart.findIndex(product => product.id === productId)
 
+      if(productIndex === -1) throw new Error('Product not found')
+      
       const newCart = [ 
         ...cart.slice(0, productIndex),
-        {
-          ...product,
-          amount: product.amount - 1
-        },
         ...cart.slice(productIndex + 1)
       ]
 
